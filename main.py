@@ -1,62 +1,46 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
-from apiTools import *
+from fastapi import FastAPI
+from data import lista_alunos
+# Itens para exemplificar async:
+# async def get(db: Any = Depends(fake_db)):
+# from fastapi import Depends
+# from apiTools import fake_db
+# from typing import Any
 
 app = FastAPI()
-templates = Jinja2Templates(directory='templates')
 
-@app.get("/covid", response_class=HTMLResponse)
-def read_root(request: Request): 
-    url = 'https://covid19-brazil-api.vercel.app/api/report/v1'
-    dados_covid = get_data_url(url)
+@app.get('/get-alunos')
+async def get():
+    return lista_alunos
 
-    return templates.TemplateResponse(
-        'covid.html',
-        {"request": request, 'dados_covid': dados_covid }
-    )
+@app.get('/get-aluno/{id}')
+async def get_by_id(id: int):
+    id_int = int(id) - 1
+    return lista_alunos[id_int]
 
-@app.get("/covid/desc", response_class=HTMLResponse)
-def read_desc(request: Request):
-    url = 'https://covid19-brazil-api.vercel.app/api/report/v1'
-    dados_covid = get_data_url(url)
-    organized_desc = organize_case_list(dados_covid)
+@app.post('/post-aluno')
+async def post(nome: str):
+    new_id = len(lista_alunos) + 1
+    lista_alunos.append({
+        'id': new_id,
+        'nome': nome
+    })
+    return lista_alunos
 
-    return templates.TemplateResponse(
-        'desc.html',
-        {"request": request, 'organized_desc': organized_desc }
-    )
+@app.put('/update-aluno/{id}')
+async def update(id: int, nome:str):
+    id_int = int(id) -1
+    aluno_update = lista_alunos[id_int]
+    aluno_update['nome'] = nome
+    return lista_alunos
 
-@app.get("/covid/cresc", response_class=HTMLResponse)
-def read_cresc(request: Request):
-    url = 'https://covid19-brazil-api.vercel.app/api/report/v1'
-    dados_covid = get_data_url(url)
-    organized_cresc = organize_case_list_reverse(dados_covid)
+@app.delete('/delete-aluno/{id}')
+async def delete(id: int):
+    id_int = int(id)
+    lista_alunos.pop(id_int-1)
 
-    return templates.TemplateResponse(
-        'cresc.html',
-        {"request": request, 'organized_cresc': organized_cresc }
-    )
+    news_ids = 0
+    for aluno in lista_alunos:
+        news_ids += 1
+        aluno['id'] = news_ids
 
-
-@app.get("/covid/mortes", response_class=HTMLResponse)
-def read_cresc_deaths(request: Request):
-    url = 'https://covid19-brazil-api.vercel.app/api/report/v1'
-    dados_covid = get_data_url(url)
-    organized_cresc = organize_case_list_deaths(dados_covid)
-
-    return templates.TemplateResponse(
-        'cresc_deaths.html',
-        {"request": request, 'organized_cresc': organized_cresc }
-    )
-
-@app.get("/covid/mortes-desc", response_class=HTMLResponse)
-def read_cresc_deaths_desc(request: Request):
-    url = 'https://covid19-brazil-api.vercel.app/api/report/v1'
-    dados_covid = get_data_url(url)
-    organized_cresc = organize_case_list_deaths_desc(dados_covid)
-
-    return templates.TemplateResponse(
-        'cresc_deaths_desc.html',
-        {"request": request, 'organized_cresc': organized_cresc }
-    )
+    return lista_alunos
