@@ -1,0 +1,1 @@
+# Minha ideia é sincronizar o programa com o banco de dados "TinyDB". Vou procurar fazer depois.
