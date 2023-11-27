@@ -1,6 +1,6 @@
 '''
 -COMENTEI O CÓDIGO DO RODOLFO, É PRECISO CRIAR UM PROGRAMA PRINCIPAL PARA CHAMAR AS CLASSES
--
+-O professor pediu para criar uma pasta com os testes(pytest), mas a pasta dos testes está junto com o código
 '''
 
 
