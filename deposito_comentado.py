@@ -1,6 +1,5 @@
 '''Este programa é uma simulação de um sistema para um depósito de tintas com algumas classes e seus métodos executados por funções.'''
-# Uma ideia é sincronizar o programa com o banco de dados "SQLite". Vou procurar fazer depois.
-
+# Sincronizado com o banco de dados não relacional SQL pelo "SQLite".
 class Tinta:
     '''Classe que cria a partir do método construtor, os objetos do tipo Tinta, com seus respectivos atributos.'''
     def __init__(self, id, nome:str, cor:str, quantidade_peso:float, quantidade_estoque:int, preco:float, observacao=None):
@@ -14,7 +13,7 @@ class Tinta:
         self.observacao = observacao # A observacao é um atributo opcional, quando quiser basta passá-la como argumento ao criar uma instância da classe.
 
 class LojaDeTintas:
-    '''Esta classe tem o objetivo de armazenar todas as tintas do depósito.'''
+    '''Classe que armazena todas as tintas criadas e as manipula com seus métodos.'''
     def __init__(self):
         self.tintas = []
 
@@ -37,7 +36,7 @@ class LojaDeTintas:
         '''Método que retorna a tinta a partir do ID informado.'''
         for tinta in self.tintas:
             if tinta.id == id:
-                return tinta
+                return print(f"Product ID: {tinta.id}, Nome: {tinta.nome}, Cor: {tinta.cor}, Peso da tinta: {tinta.quantidade_peso}, Quantidade no estoque: {tinta.quantidade_estoque}, Preço: {tinta.preco}")
         return None
 
     def atualizar_tinta_by_id(self, id, novo_nome, nova_cor, nova_quantidade_peso, nova_quantidade_estoque, novo_preco):
@@ -136,7 +135,7 @@ class Venda:
         self.data = data
 
     def vender_tinta(self, nome_tinta, quantidade):                 # TESTAR !!
-        # Vende uma quantidade específica de uma tinta do estoque
+        '''Vende uma quantidade específica de uma tinta do estoque'''
         if nome_tinta in self.estoque_tintas and quantidade <= self.estoque_tintas[nome_tinta]:
             self.estoque_tintas[nome_tinta] -= quantidade
             print(f'{quantidade} litros de {nome_tinta} vendidos.')
@@ -146,6 +145,7 @@ class Venda:
             print(f'Erro: Estoque insuficiente para vender {quantidade} litros de {nome_tinta}.')
 
 class TransacaoCompra:
+    '''Classe que cria um objeto com as informações da compra.'''
     def __init__(self, fornecedor, tinta, quantidade, data):
         self.fornecedor = fornecedor
         self.tinta = tinta
@@ -153,22 +153,25 @@ class TransacaoCompra:
         self.data = data
 
 class CarrinhoCompras:
+    '''Classe que armazena os objetos com as informações da compra.'''
     def __init__(self):
         self.itens = []
 
-    def adicionar_item(self, tinta, quantidade): # Código?
+    def adicionar_item(self, tinta, quantidade):
         self.itens.append((tinta, quantidade))   # Coloca no "append" só o código ou todas as caracteríscticas?
 
 class CupomDesconto:
+    '''Classe que aplica um desconto a partir do ID da compra.'''
     def __init__(self, id, desconto_percentual, data_validade):
         self.id = id
         self.desconto_percentual = desconto_percentual
         self.data_validade = data_validade
 
     def lancar_desconto():
+        '''Teoricamente aplica o desconto no produto selecionado.'''
         ...
 
-'''loja = LojaDeTintas()
+loja = LojaDeTintas()
 client = ListaClientes()
 
 # Exemplo de uso:
@@ -202,20 +205,7 @@ print('NOVA ATUALIZAÇÂO NO SISTEMA')
 client.listar_clientes()
 client.excluir_cliente_by_cpf(62125452634)
 print('NOVA ATUALIZAÇÂO NO SISTEMA')
-client.listar_clientes()'''
+client.listar_clientes()
 
-
-class DepositoTintas:
-    def __init__(self):
-        # Inicializa o depósito com um dicionário vazio para armazenar as tintas e seus estoques
-        self.estoque_tintas = {}
-
-    def verificar_estoque(self):
-        # Retorna o estoque atual de todas as tintas
-        return self.estoque_tintas
-
-'''# Exemplo de uso
-deposito_tintas = DepositoTintas()
-print(deposito_tintas.verificar_estoque())
-deposito_tintas.vender_tinta('Tinta Azul', 50)
-print(deposito_tintas.verificar_estoque())'''
+# Pendente
+Venda.vender_tinta('Tinta Coral', 10)
