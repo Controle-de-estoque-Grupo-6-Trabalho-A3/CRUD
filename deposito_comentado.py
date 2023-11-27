@@ -37,7 +37,7 @@ class LojaDeTintas:
         '''Método que retorna a tinta a partir do ID informado.'''
         for tinta in self.tintas:
             if tinta.id == id:
-                return print(f"Product ID: {tinta.id}, Nome: {tinta.nome}, Cor: {tinta.cor}, Peso da tinta: {tinta.quantidade_peso}, Quantidade no estoque: {tinta.quantidade_estoque}, Preço: {tinta.preco}")
+                return tinta
         return None
 
     def atualizar_tinta_by_id(self, id, novo_nome, nova_cor, nova_quantidade_peso, nova_quantidade_estoque, novo_preco):
@@ -168,7 +168,7 @@ class CupomDesconto:
     def lancar_desconto():
         ...
 
-loja = LojaDeTintas()
+'''loja = LojaDeTintas()
 client = ListaClientes()
 
 # Exemplo de uso:
@@ -202,7 +202,7 @@ print('NOVA ATUALIZAÇÂO NO SISTEMA')
 client.listar_clientes()
 client.excluir_cliente_by_cpf(62125452634)
 print('NOVA ATUALIZAÇÂO NO SISTEMA')
-client.listar_clientes()
+client.listar_clientes()'''
 
 
 class DepositoTintas:
@@ -214,8 +214,8 @@ class DepositoTintas:
         # Retorna o estoque atual de todas as tintas
         return self.estoque_tintas
 
-# Exemplo de uso
+'''# Exemplo de uso
 deposito_tintas = DepositoTintas()
 print(deposito_tintas.verificar_estoque())
 deposito_tintas.vender_tinta('Tinta Azul', 50)
-print(deposito_tintas.verificar_estoque())
+print(deposito_tintas.verificar_estoque())'''
