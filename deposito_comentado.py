@@ -32,11 +32,11 @@ class LojaDeTintas:
         for tinta in self.tintas:
             print(f"Product ID: {tinta.id}, Nome: {tinta.nome}, Cor: {tinta.cor}, Peso da tinta: {tinta.quantidade_peso}, Quantidade no estoque: {tinta.quantidade_estoque}, Preço: {tinta.preco}")
 
-    def get_tinta_by_id(self, id):
+        def get_tinta_by_id(self, id):
         '''Método que retorna a tinta a partir do ID informado.'''
         for tinta in self.tintas:
             if tinta.id == id:
-                return print(f"Product ID: {tinta.id}, Nome: {tinta.nome}, Cor: {tinta.cor}, Peso da tinta: {tinta.quantidade_peso}, Quantidade no estoque: {tinta.quantidade_estoque}, Preço: {tinta.preco}")
+                return tinta
         return None
 
     def atualizar_tinta_by_id(self, id, novo_nome, nova_cor, nova_quantidade_peso, nova_quantidade_estoque, novo_preco):
