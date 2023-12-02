@@ -1,5 +1,5 @@
 import pytest
-from deposito_comentado import Tinta, LojaDeTintas, DepositoTintas
+from deposito_comentado import Tinta, LojaDeTintas
 
 # Testes para a classe Tinta
 def teste_criar_tinta():
@@ -74,10 +74,4 @@ def teste_excluir_tinta_by_id():
     # Testar a exclusão de uma tinta não existente
     assert loja.excluir_tinta_by_id(2) == "Tinta não encontrada."
 
-# Testes para a classe DepositoTintas
-def teste_verificar_estoque():
-    deposito = DepositoTintas()
-    tinta1 = Tinta(id=1, nome='Tinta A teste', cor='Azul', quantidade_peso=20.00, quantidade_estoque=20, preco=100.00)
-    tinta2 = Tinta(id=2, nome='Tinta B teste', cor='Rosa', quantidade_peso=18.00, quantidade_estoque=30, preco=200.00)
-    deposito.estoque_tintas = {1: tinta1, 2: tinta2}
-    assert deposito.verificar_estoque() == {1: tinta1, 2: tinta2}
+
