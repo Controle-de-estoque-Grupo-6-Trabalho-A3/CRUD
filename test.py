@@ -50,17 +50,16 @@ def teste_get_tinta_by_id(capsys):
     with capsys.disabled():
         assert loja.get_tinta_by_id(3) is None
 
-
 def teste_atualizar_tinta_by_id():
     loja = LojaDeTintas()
     tinta1 = Tinta(id=1, nome='Tinta A teste', cor='Azul', quantidade_peso=20.00, quantidade_estoque=20, preco=100.00)
     loja.adicionar_tinta(tinta1)
 
     # Testar a atualização bem sucedida
-    assert loja.atualizar_tinta_by_id(1, 'NovaTinta', 'Verde', 30.00, 10, 150.00) == "Tinta atualizada com sucesso!"
+    assert loja.atualizar_info_tinta_por_id(1, 'NovaTinta', 'Verde', 30.00, 10, 150.00) == "Tinta atualizada com sucesso!"
 
     # Testar a atualização de uma tinta não existente
-    assert loja.atualizar_tinta_by_id(2, 'NovaTinta', 'Verde', 8.0, 20, 80.0) == "Tinta não encontrada."
+    assert loja.atualizar_info_tinta_por_id(2, 'NovaTinta', 'Verde', 8.0, 20, 80.0) == "Tinta não encontrada."
 
 def teste_excluir_tinta_by_id():
     loja = LojaDeTintas()
@@ -73,5 +72,3 @@ def teste_excluir_tinta_by_id():
 
     # Testar a exclusão de uma tinta não existente
     assert loja.excluir_tinta_by_id(2) == "Tinta não encontrada."
-
-
