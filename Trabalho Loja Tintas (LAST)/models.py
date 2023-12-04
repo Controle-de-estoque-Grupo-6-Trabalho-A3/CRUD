@@ -1,23 +1,13 @@
+from database import Database
+
 class Tinta:
-    def __init__(self, codigo, nome:str, cor:str):
+    def __init__(self, codigo, nome:str, cor:str, quantidade_peso:float, quantidade_estoque:int, preco:float):
         self.codigo = codigo
         self.nome = nome
         self.cor = cor
-        
-    def exibir_informacoes(self):
-        print(f"Código: {self.codigo}, Nome: {self.nome}, Cor: {self.cor}, Quantidade em litros: {self.quantidade_peso}, Quantidade no estoque: {self.quantidade_estoque}, Preço: {self.preco}")
-        if self.observacao: # O método exibir_informacoes verifica se há uma observação antes de tentar imprimi-la.
-            print(f"Observação: {self.observacao}")
-    
-    def listar_tintas(self):             # O método "listar tintas" é aqui dentro da classe Tinta?
-        for tinta in self.tintas:
-            print(f"Código: {tinta.codigo}, Nome: {tinta.nome}, Cor: {tinta.cor}, Quantidade: {tinta.quantidade}, Preço: {tinta.preco}")
-
-
-
-
-from database import Database
-
+        self.quantidade_peso = quantidade_peso
+        self.quantidade_estoque = quantidade_estoque
+        self.preco = preco
 
 class LojaDeTintas:
     def __init__(self, db: Database):
@@ -29,54 +19,37 @@ class LojaDeTintas:
             CREATE TABLE IF NOT EXISTS tintas (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nome VARCHAR(255) NOT NULL,
-                cor VARCHAR(255) NOT NULL
+                cor VARCHAR(255) NOT NULL,
+                quantidade_peso VARCHAR(255) NOT NULL,
+                quantidade_estoque VARCHAR(255) NOT NULL,
+                preco VARCHAR(255) NOT NULL
             ) ''')
 
-    def adicionar_tinta(self, tinta: Tinta):
-        # cursor = self.conx.cursor()
-        
-        # cursor.execute('''
-        #     INSERT INTO tintas (nome, cor) 
-        #     VALUES (?, ?)
-        # ''', [tinta.nome, tinta.cor])
-
-        # cursor.close()
-        # self.conx.commit()
+    def adicionar_tinta(self, tinta:Tinta):
         self.db.execute('''
-            INSERT INTO tintas (nome, cor) 
-            VALUES (?, ?)
-        ''', tinta.nome, tinta.cor)
+            INSERT INTO tintas (nome, cor, quantidade_peso, quantidade_estoque, preco)
+            VALUES (?, ?, ?, ?, ?)
+        ''', tinta.nome, tinta.cor, tinta.quantidade_peso, tinta.quantidade_estoque, tinta.preco)
 
-    def listar_tintas(self) -> list[Tinta]:             # Ou dentro da classe LojaDeTintas?
+    def listar_tintas(self) -> list[Tinta]:
         tintas_tuplas = self.db.get_all('SELECT * FROM tintas')
 
         tintas = []
         for tinta in tintas_tuplas:
-            tintas.append(Tinta(tinta[0], tinta[1], tinta[2]))
-
+            tintas.append(Tinta(tinta[0], tinta[1], tinta[2], tinta[3], tinta[4], tinta[5]))
         return tintas
 
-    def buscar_tinta_by_id(self, codigo):
-        for tinta in self.tintas:
-            if tinta.codigo == codigo:
-                return tinta
-        return None
-
-    def atualizar_tinta_by_id(self, codigo, novo_nome, nova_cor, nova_quantidade, novo_preco):
-        tinta = self.buscar_tinta_by_id(codigo)
-        if tinta:
-            tinta.nome = novo_nome
-            tinta.cor = nova_cor
-            tinta.quantidade = nova_quantidade
-            tinta.preco = novo_preco
-            print("Tinta atualizada com sucesso!")
-        else:
-            print("Tinta não encontrada.")
+    def atualizar_tinta_by_id(self, id, nome, cor, quantidade_peso, quantidade_estoque, preco):
+        self.db.execute('''
+            UPDATE tintas 
+            SET nome = ?, cor = ? , quantidade_peso = ?, quantidade_estoque = ?, preco = ?
+            WHERE id = ?"
+        ''', id, nome, cor, quantidade_peso, quantidade_estoque, preco)
 
     def excluir_tinta_by_id(self, codigo):
-        tinta = self.buscar_tinta_by_id(codigo)
+        '''tinta = self.buscar_tinta_by_id(codigo)
         if tinta:
             self.tintas.remove(tinta)
             print("Tinta excluída com sucesso!")
         else:
-            print("Tinta não encontrada.")
+            print("Tinta não encontrada.")'''
