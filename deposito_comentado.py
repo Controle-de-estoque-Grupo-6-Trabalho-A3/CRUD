@@ -1,4 +1,5 @@
 '''Este programa é uma simulação de um sistema para um depósito de tintas com algumas classes e seus métodos executados por funções.'''
+# Os 'docstrings', documentando cada função já estão contidos em todas as funções e classes deste código.
 
 class Tinta:
     '''Classe que cria a partir do método construtor, os objetos do tipo Tinta, com seus respectivos atributos.'''
